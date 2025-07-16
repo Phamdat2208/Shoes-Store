@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+/* Đặt class="dark" để chuyển sang chế độ tối */
+/* @custom-variant dark (&:where(.dark, .dark *));  */
+
+/* Chuyển sang chế độ tối bằng js */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
