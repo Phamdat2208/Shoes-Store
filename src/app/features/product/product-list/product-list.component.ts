@@ -3,6 +3,7 @@ import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
 import { CommonModule } from '@angular/common';
+import { ProductService } from '../../../service/product.service';
 
 @Component({
   selector: 'app-product-list',
@@ -12,14 +13,10 @@ import { CommonModule } from '@angular/common';
 })
 export class ProductListComponent implements OnInit{
   private apiUrl = 'http://localhost:3001/products';
-  private http = inject(HttpClient);
+  private productService = inject(ProductService);
   public data!: any;
 
-  getAllProducts(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
-  }
-
   ngOnInit() {
-    this.getAllProducts().subscribe((res: any) => this.data = res)
+    this.productService.getAllProducts().subscribe((res: any) => this.data = res)
   }
 }
