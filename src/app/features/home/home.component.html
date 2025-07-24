@@ -42,59 +42,72 @@
 </div>
 
 <!-- Trending -->
-<div class="pt-10">
+<div class="pt-10 h-500">
   <p class="mb-10 text-4xl font-thin text-gray-900 text-center">
     WHAT'S TRENDING
   </p>
 
-  <!-- <div id="gallery" class="mx-auto w-1/2 relative" data-carousel="slide">
-    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-      <ng-container *ngFor="let item of trendingProduct">
-        <div class="hidden ease-in-out" data-carousel-item>
-            <img [src]="item?.imageUrl" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="">
+  <div id="my-carousel" class="relative w-full" data-carousel="slide">
+    <div class="relative h-72 overflow-hidden rounded-lg">
+      <div *ngFor="let image of trendingProduct; let i = index"
+           class="w-full h-full duration-700 ease-in-out"
+           [class.hidden]="i !== currentIndex"
+           [attr.data-carousel-item]="i === currentIndex ? 'active' : ''">
+        <div class="flex items-center justify-center h-full">
+          <img [src]="image?.imageUrl"
+               class="block h-50 w-50 object-contain mx-auto my-auto bg-gray-100 rounded-full">
         </div>
-      </ng-container>
-    </div>
-    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-            </svg>
-            <span class="sr-only">Previous</span>
-        </span>
-    </button>
-    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-            </svg>
-            <span class="sr-only">Next</span>
-        </span>
-    </button>
-  </div> -->
-  <div id="gallery" class="mx-auto w-1/2 relative" data-carousel="slide" data-carousel-interval="3000">
-  <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-    <ng-container *ngFor="let item of trendingProduct; let i = index">
-      <div [ngClass]="{'image-active': selectedIndex === i}" class="ease-in-out">
-        <img [src]="item?.imageUrl" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="">
+
       </div>
-    </ng-container>
+
+      <!-- Next/Prev -->
+      <button (click)="prevSlide()" type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+          <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+          </svg>
+          <span class="sr-only">Previous</span>
+        </span>
+      </button>
+      <button (click)="nextSlide()" type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+          <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+          </svg>
+          <span class="sr-only">Next</span>
+        </span>
+      </button>
+    </div>
   </div>
-  <button (click)="prevImage(selectedIndex)" type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-      <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-      </svg>
-      <span class="sr-only">Previous</span>
-    </span>
-  </button>
-  <button (click)="nextImage()" type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-      <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-      </svg>
-      <span class="sr-only">Next</span>
-    </span>
-  </button>
 </div>
-</div>
+
+<div>
+    <h4>data-swiper-autoplay</h4>
+    <swiper
+      [loop]="true"
+      [autoHeight]="true"
+      [slidesPerView]="3"
+      [spaceBetween]="50"
+      [allowTouchMove]="false"
+      [autoplay]="{ delay: 2000, disableOnInteraction: false }"
+      [pagination]="{ clickable: true }"
+      [navigation]="true"
+    >
+      <ng-template data-swiper-autoplay="6000" swiperSlide>
+        Slide 1
+      </ng-template>
+
+      <ng-template
+        data-swiper-autoplay="10000"
+        class="swiper-slide"
+        swiperSlide
+      >
+        Slide 2
+      </ng-template>
+
+      <ng-template data-swiper-autoplay="60000" swiperSlide>
+        Slide 3
+      </ng-template>
+    </swiper>
+  </div>
+  <div>

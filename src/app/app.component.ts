@@ -9,7 +9,7 @@ import { ProductListComponent } from './features/product/product-list/product-li
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, ProductCardComponent, ProductListComponent],
+  imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
