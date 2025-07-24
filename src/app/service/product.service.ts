@@ -22,4 +22,8 @@ export class ProductService {
   newProduct(): Observable<any> {
     return this.http.get<any>(this.apiUrl + `new-product`);
   }
+
+  trendingProduct(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + `trending-products`);
+  }
 }
