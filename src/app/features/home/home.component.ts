@@ -4,13 +4,16 @@ import { ProductService } from '../../service/product.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import Swiper from 'swiper';
-import { Navigation, Pagination } from 'swiper/modules';
+// import Swiper from 'swiper';
+import { Navigation, Pagination, Autoplay, EffectCoverflow } from 'swiper/modules';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { SwiperOptions } from 'swiper/types';
+import Swiper from 'swiper/bundle';
+import { RouterLink } from '@angular/router';
+
+// Swiper.use([Navigation, Pagination, Autoplay, EffectCoverflow]);
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
@@ -21,6 +24,44 @@ export class HomeComponent {
   public allProduct!: any;
   public trendingProduct!: any;
   public currentIndex = 0;
+  public coverflowEffect = {
+    rotate: 50,
+    stretch: 0,
+    depth: 50,
+    modifier: 1,
+    slideShadows: true,
+  };
+
+  public navigationConfig = {
+    nextEl: '.custom-next',
+    prevEl: '.custom-prev',
+  };
+
+  @ViewChild('swiper') swiper!: ElementRef<any>;
+
+  initializeSwiper() {
+    const swiperParams = {
+      slidesPerView: 3,
+      navigation: {
+        nextEl: '.custom-next',
+        prevEl: '.custom-prev',
+      },
+      loop: true,
+      autoplay: {
+        delay: 2000,
+        disableOnInteraction: false
+      },
+      spaceBetween: 30,
+      centeredSlides: true,
+    };
+    Object.assign(this.swiper.nativeElement, swiperParams);
+    this.swiper.nativeElement.initialize();
+
+    // Bắt sự kiện init để chắc chắn autoplay khởi chạy
+    this.swiper.nativeElement.addEventListener('swiperInit', () => {
+      this.swiper.nativeElement.swiper.autoplay?.start();
+    });
+  }
 
   getNewProduct() {
     this.productService.newProduct().subscribe((res: any) => this.detailProduct = res);
@@ -31,20 +72,17 @@ export class HomeComponent {
   }
 
   getTrendingProduct() {
-    this.productService.trendingProduct().subscribe((res: any) => this.trendingProduct = res)
+    this.productService.trendingProduct().subscribe((res: any) => {
+      this.trendingProduct = res;
+      setTimeout(() => {
+        this.initializeSwiper();
+      }, 0);
+    })
   }
 
   ngOnInit() {
     this.getNewProduct();
     this.getAllProduct();
     this.getTrendingProduct();
-  }
-
-  nextSlide() {
-    this.currentIndex = (this.currentIndex + 1) % this.trendingProduct.length;
-  }
-
-  prevSlide() {
-    this.currentIndex = (this.currentIndex - 1 + this.trendingProduct.length) % this.trendingProduct.length;
   }
 }

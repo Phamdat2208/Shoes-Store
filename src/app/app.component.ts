@@ -6,10 +6,11 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { ThemeService } from './service/theme.service';
 import { ProductCardComponent } from './shared/components/product-card/product-card.component';
 import { ProductListComponent } from './features/product/product-list/product-list.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
