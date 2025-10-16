@@ -1,25 +1,29 @@
-import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { Observable } from 'rxjs';
-import { HeaderComponent } from './shared/components/header/header.component';
-import { ThemeService } from './service/theme.service';
-import { ProductCardComponent } from './shared/components/product-card/product-card.component';
-import { ProductListComponent } from './features/product/product-list/product-list.component';
-import { FooterComponent } from './shared/components/footer/footer.component';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
+import { ToastComponent } from "./shared/modal/toast/toast.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, CommonModule, ToastComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'ShoesStore';
-  private themeService = inject(ThemeService);
+  private router = inject(Router);
 
-  ngOnInit() {
-    localStorage.clear();
-    this.themeService.applyTheme();
+  ngAfterViewInit(): void {
+    import('flowbite').then(({ initFlowbite }) => {
+      initFlowbite();
+
+      // ⚡ Tự init lại mỗi khi route thay đổi
+      this.router.events
+        .pipe(filter(event => event instanceof NavigationEnd))
+        .subscribe(() => {
+          initFlowbite();
+        });
+    });
   }
 }

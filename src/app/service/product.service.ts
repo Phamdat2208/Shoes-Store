@@ -1,29 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { EndPoint } from '../shared/components/utils/endpoint.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  constructor() { }
-
   private http = inject(HttpClient);
-  private apiUrl = `http://localhost:3001/`;
+  private apiUrl = `http://localhost:8080/`;
 
   getAllProducts(): Observable<any> {
-    return this.http.get<any>(this.apiUrl + `products`);
+    return this.http.get<any>(this.apiUrl + EndPoint.Products);
   }
 
   detailProduct(params: any): Observable<any> {
-    return this.http.get<any>(this.apiUrl + `products/${params}`);
+    return this.http.get<any>(this.apiUrl + EndPoint.Products + `/${params}`);
   }
 
   newProduct(): Observable<any> {
-    return this.http.get<any>(this.apiUrl + `new-product`);
+    return this.http.get<any>(this.apiUrl + EndPoint.NewProducts);
   }
 
   trendingProduct(): Observable<any> {
-    return this.http.get<any>(this.apiUrl + `trending-products`);
+    return this.http.get<any>(this.apiUrl + EndPoint.Products);
   }
 }

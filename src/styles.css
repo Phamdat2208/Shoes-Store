@@ -6,3 +6,39 @@
 
 /* Chuyển sang chế độ tối bằng js */
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+.ant-notification-notice {
+  display: flex;
+  margin: 40px 0 10px 0;
+  background: rgba(255, 255, 255, 0.3); /* trắng trong suốt */
+  backdrop-filter: blur(10px); /* làm mờ nền sau */
+  -webkit-backdrop-filter: blur(10px); /* hỗ trợ Safari */
+  pointer-events: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4); /* viền nhẹ tạo cảm giác kính */
+}
+
+.ant-notification-notice-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.ant-notification-top {
+  position: fixed !important;
+  top: 1rem !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+}
+
+
+.ant-notification-notice-content {
+  padding: 5px;
+  width: 300px;
+}
+

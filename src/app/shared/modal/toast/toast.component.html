@@ -1,0 +1,21 @@
+<!-- <ng-template #template let-toast="data" let-ref="$implicit">
+  <div class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow-sm mb-5">
+    <div class="toast ms-3 text-sm font-normal">
+      {{ toast.message }}
+    </div>
+  </div>
+</ng-template> -->
+
+<ng-template #template let-toast="data" class="">
+  <div class="ant-notification-notice-content">
+    <div class="ant-notification-notice-with-icon">
+      <span class="ant-notification-notice-icon">
+        <nz-icon nzType="" style="color: rgb(16, 142, 233)" />
+      </span>
+      <!-- <div class="ant-notification-notice-message">Thông báo</div> -->
+      <div class="ant-notification-notice-description m-3 text-sm font-normal">
+        {{ toast.message }}
+      </div>
+    </div>
+  </div>
+</ng-template>

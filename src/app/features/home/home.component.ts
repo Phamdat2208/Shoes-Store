@@ -9,6 +9,7 @@ import { Navigation, Pagination, Autoplay, EffectCoverflow } from 'swiper/module
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import Swiper from 'swiper/bundle';
 import { RouterLink } from '@angular/router';
+import { BasicAuthService } from '../../service/BasicAuth.service';
 
 // Swiper.use([Navigation, Pagination, Autoplay, EffectCoverflow]);
 @Component({
@@ -20,6 +21,9 @@ import { RouterLink } from '@angular/router';
 })
 export class HomeComponent {
   private productService = inject(ProductService);
+  private http = inject(HttpClient);
+  private basicAuthService = inject(BasicAuthService);
+
   public detailProduct!: any;
   public allProduct!: any;
   public trendingProduct!: any;
@@ -54,13 +58,8 @@ export class HomeComponent {
       spaceBetween: 30,
       centeredSlides: true,
     };
-    Object.assign(this.swiper.nativeElement, swiperParams);
+    Object.assign(this.swiper?.nativeElement, swiperParams);
     this.swiper.nativeElement.initialize();
-
-    // Bắt sự kiện init để chắc chắn autoplay khởi chạy
-    this.swiper.nativeElement.addEventListener('swiperInit', () => {
-      this.swiper.nativeElement.swiper.autoplay?.start();
-    });
   }
 
   getNewProduct() {
@@ -80,9 +79,16 @@ export class HomeComponent {
     })
   }
 
+  callApi() {
+    // this.basicAuthService.excuteLogout();
+  }
+
   ngOnInit() {
-    this.getNewProduct();
-    this.getAllProduct();
+    // this.getNewProduct();
+    // this.getAllProduct();
     this.getTrendingProduct();
+    this.swiper?.nativeElement.addEventListener('swiperInit', () => {
+      this.swiper.nativeElement.swiper.autoplay?.start();
+    });
   }
 }
